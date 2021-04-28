@@ -135,6 +135,15 @@ class ContentType(ObjectIdentifier):
         '1.2.840.113549.1.9.16.1.2': 'authenticated_data',
         '1.2.840.113549.1.9.16.1.9': 'compressed_data',
         '1.2.840.113549.1.9.16.1.23': 'authenticated_enveloped_data',
+
+        # GM/T 0010-2012 5
+        '1.2.156.10197.6.1.4.2.1': 'data',
+        '1.2.156.10197.6.1.4.2.2': 'signed_data',
+        '1.2.156.10197.6.1.4.2.3': 'enveloped_data',
+        '1.2.156.10197.6.1.4.2.4': 'signed_and_enveloped_data',
+        '1.2.156.10197.6.1.4.2.5': 'encrypted_data',
+        # TODO(AtlantisFox) add keyAgreementInfo
+        # '1.2.156.10197.6.1.4.2.6': None,
     }
 
 
