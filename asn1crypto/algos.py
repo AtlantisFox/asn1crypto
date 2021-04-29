@@ -39,6 +39,7 @@ from .core import (
 # https://tools.ietf.org/html/rfc3279, https://tools.ietf.org/html/rfc4055,
 # https://tools.ietf.org/html/rfc5758, https://tools.ietf.org/html/rfc7292,
 # http://www.emc.com/collateral/white-papers/h11302-pkcs5v2-1-password-based-cryptography-standard-wp.pdf
+# http://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=252CF0F72A7BE339A56DEA7D774E8994
 
 class AlgorithmIdentifier(Sequence):
     _fields = [
@@ -110,6 +111,8 @@ class HmacAlgorithmId(ObjectIdentifier):
         '1.2.840.113549.2.7': 'sha1',
         '1.2.840.113549.2.8': 'sha224',
         '1.2.840.113549.2.9': 'sha256',
+        # SM3_HMAC
+        '1.2.156.10197.1.401.2': 'sm3',
         '1.2.840.113549.2.10': 'sha384',
         '1.2.840.113549.2.11': 'sha512',
         '1.2.840.113549.2.12': 'sha512_224',
@@ -135,6 +138,8 @@ class DigestAlgorithmId(ObjectIdentifier):
         '1.3.14.3.2.26': 'sha1',
         '2.16.840.1.101.3.4.2.4': 'sha224',
         '2.16.840.1.101.3.4.2.1': 'sha256',
+        # SM3
+        '1.2.156.10197.1.401.1': 'sm3',
         '2.16.840.1.101.3.4.2.2': 'sha384',
         '2.16.840.1.101.3.4.2.3': 'sha512',
         '2.16.840.1.101.3.4.2.5': 'sha512_224',
@@ -239,6 +244,8 @@ class SignedDigestAlgorithmId(ObjectIdentifier):
         '1.2.840.113549.1.1.5': 'sha1_rsa',
         '1.2.840.113549.1.1.14': 'sha224_rsa',
         '1.2.840.113549.1.1.11': 'sha256_rsa',
+        # SM3_RSA
+        '1.2.156.10197.1.502': 'sm3_rsa',
         '1.2.840.113549.1.1.12': 'sha384_rsa',
         '1.2.840.113549.1.1.13': 'sha512_rsa',
         '1.2.840.113549.1.1.10': 'rsassa_pss',
@@ -250,6 +257,8 @@ class SignedDigestAlgorithmId(ObjectIdentifier):
         '1.2.840.10045.4.1': 'sha1_ecdsa',
         '1.2.840.10045.4.3.1': 'sha224_ecdsa',
         '1.2.840.10045.4.3.2': 'sha256_ecdsa',
+        # SM3_SM2
+        '1.2.156.10197.1.501':'sm3_sm2',
         '1.2.840.10045.4.3.3': 'sha384_ecdsa',
         '1.2.840.10045.4.3.4': 'sha512_ecdsa',
         '2.16.840.1.101.3.4.3.9': 'sha3_224_ecdsa',
@@ -278,6 +287,8 @@ class SignedDigestAlgorithmId(ObjectIdentifier):
         'sha256_dsa': '2.16.840.1.101.3.4.3.2',
         'sha256_ecdsa': '1.2.840.10045.4.3.2',
         'sha256_rsa': '1.2.840.113549.1.1.11',
+        'sm3_sm2': '1.2.156.10197.1.501',
+        'sm3_rsa': '1.2.156.10197.1.502',
         'sha384_ecdsa': '1.2.840.10045.4.3.3',
         'sha384_rsa': '1.2.840.113549.1.1.12',
         'sha512_ecdsa': '1.2.840.10045.4.3.4',
@@ -316,6 +327,7 @@ class SignedDigestAlgorithm(_ForceNullParameters, Sequence):
             'sha1_rsa': 'rsassa_pkcs1v15',
             'sha224_rsa': 'rsassa_pkcs1v15',
             'sha256_rsa': 'rsassa_pkcs1v15',
+            'sm3_rsa': 'rsassa_pkcs1v15',
             'sha384_rsa': 'rsassa_pkcs1v15',
             'sha512_rsa': 'rsassa_pkcs1v15',
             'rsassa_pkcs1v15': 'rsassa_pkcs1v15',
@@ -327,6 +339,7 @@ class SignedDigestAlgorithm(_ForceNullParameters, Sequence):
             'sha1_ecdsa': 'ecdsa',
             'sha224_ecdsa': 'ecdsa',
             'sha256_ecdsa': 'ecdsa',
+            'sm3_sm2': 'ecdsa',
             'sha384_ecdsa': 'ecdsa',
             'sha512_ecdsa': 'ecdsa',
             'sha3_224_ecdsa': 'ecdsa',
@@ -361,6 +374,7 @@ class SignedDigestAlgorithm(_ForceNullParameters, Sequence):
             'sha1_rsa': 'sha1',
             'sha224_rsa': 'sha224',
             'sha256_rsa': 'sha256',
+            'sm3_rsa': 'sm3',
             'sha384_rsa': 'sha384',
             'sha512_rsa': 'sha512',
             'sha1_dsa': 'sha1',
@@ -369,6 +383,7 @@ class SignedDigestAlgorithm(_ForceNullParameters, Sequence):
             'sha1_ecdsa': 'sha1',
             'sha224_ecdsa': 'sha224',
             'sha256_ecdsa': 'sha256',
+            'sm3_sm2': 'sm3',
             'sha384_ecdsa': 'sha384',
             'sha512_ecdsa': 'sha512',
         }
@@ -623,6 +638,20 @@ class EncryptionAlgorithmId(ObjectIdentifier):
         '2.16.840.1.101.3.4.1.46': 'aes256_gcm',
         '2.16.840.1.101.3.4.1.47': 'aes256_ccm',
         '2.16.840.1.101.3.4.1.48': 'aes256_wrap_pad',
+        # From GMSSl
+        "1.2.156.10197.1.104.1": 'sm4_ecb',
+        "1.2.156.10197.1.104.2": 'sm4_cbc',
+        "1.2.156.10197.1.104.3": 'sm4_ofb',
+        "1.2.156.10197.1.104.4": 'sm4_cfb',
+        "1.2.156.10197.1.104.5": 'sm4_cfb1',
+        "1.2.156.10197.1.104.6": 'sm4_cfb8',
+        "1.2.156.10197.1.104.7": 'sm4_ctr',
+        "1.2.156.10197.1.104.8": 'sm4_gcm',
+        "1.2.156.10197.1.104.9": 'sm4_ccm',
+        "1.2.156.10197.1.104.10": 'sm4_xts',
+        "1.2.156.10197.1.104.11": 'sm4_wrap',
+        "1.2.156.10197.1.104.12": 'sm4_wrap_pad',
+        "1.2.156.10197.1.104.100": 'sm4_ocb',
         # From PKCS#5
         '1.2.840.113549.1.5.13': 'pbes2',
         '1.2.840.113549.1.5.1': 'pbes1_md2_des',
