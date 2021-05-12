@@ -60,12 +60,12 @@ class _ForceNullParameters(object):
     # https://tools.ietf.org/html/rfc4055#page-15 and
     # https://tools.ietf.org/html/rfc4055#section-2.1
     _null_algos = set([
-        '1.2.840.113549.1.1.1',    # rsassa_pkcs1v15 / rsaes_pkcs1v15 / rsa
-        '1.2.840.113549.1.1.11',   # sha256_rsa
-        '1.2.840.113549.1.1.12',   # sha384_rsa
-        '1.2.840.113549.1.1.13',   # sha512_rsa
-        '1.2.840.113549.1.1.14',   # sha224_rsa
-        '1.3.14.3.2.26',           # sha1
+        '1.2.840.113549.1.1.1',  # rsassa_pkcs1v15 / rsaes_pkcs1v15 / rsa
+        '1.2.840.113549.1.1.11',  # sha256_rsa
+        '1.2.840.113549.1.1.12',  # sha384_rsa
+        '1.2.840.113549.1.1.13',  # sha512_rsa
+        '1.2.840.113549.1.1.14',  # sha224_rsa
+        '1.3.14.3.2.26',  # sha1
         '2.16.840.1.101.3.4.2.4',  # sha224
         '2.16.840.1.101.3.4.2.1',  # sha256
         '2.16.840.1.101.3.4.2.2',  # sha384
@@ -258,7 +258,7 @@ class SignedDigestAlgorithmId(ObjectIdentifier):
         '1.2.840.10045.4.3.1': 'sha224_ecdsa',
         '1.2.840.10045.4.3.2': 'sha256_ecdsa',
         # SM3_SM2
-        '1.2.156.10197.1.501':'sm3_sm2',
+        '1.2.156.10197.1.501': 'sm3_sm2',
         '1.2.840.10045.4.3.3': 'sha384_ecdsa',
         '1.2.840.10045.4.3.4': 'sha512_ecdsa',
         '2.16.840.1.101.3.4.3.9': 'sha3_224_ecdsa',
@@ -909,9 +909,9 @@ class EncryptionAlgorithm(_ForceNullParameters, Sequence):
             # See page 24 of
             # http://www.emc.com/collateral/white-papers/h11302-pkcs5v2-1-password-based-cryptography-standard-wp.pdf
             encoded_key_bits_map = {
-                160: 5,   # 40-bit
-                120: 8,   # 64-bit
-                58: 16,   # 128-bit
+                160: 5,  # 40-bit
+                120: 8,  # 64-bit
+                58: 16,  # 128-bit
             }
 
             if rc2_parameter_version in encoded_key_bits_map:
