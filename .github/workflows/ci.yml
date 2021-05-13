@@ -15,7 +15,6 @@ jobs:
           - '2.7'
           - '3.7'
         arch:
-          - 'x86'
           - 'x64'
         exclude:
           - os: ubuntu-18.04
